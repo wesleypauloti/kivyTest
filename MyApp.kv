@@ -1,0 +1,423 @@
+<Input@MDTextField>
+    hint_text: 'Email'
+    helper_text: 'Insira seu endereço de email'
+    helper_text_mode: 'on_focus'
+    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+    size_hint_x: .4
+    halign: 'center'  # Alinha o texto horizontalmente ao centro
+
+<MagicButton@MagicBehavior+MDRectangleFlatButton>
+
+<Header@MDTopAppBar>
+    title: "Prot-On"
+    font_size: 50
+    theme_text_color: "Custom"
+    text_color: '#016974'
+    pos_hint: {'center_x': .5, 'center_y': .95}
+    left_action_items: [["arrow-left", lambda x: app.seta_voltar()]]
+
+    use_overflow: True
+    right_action_items:
+        [
+        ["home", lambda x: app.navigate_to_home(), "" , "Home"],
+        ["login", lambda x: app.navigate_to_login(), "", "Login"],
+        ["account-plus-outline", lambda x: app.navigate_to_cadastro(), "" , "Cadastrar-se"],
+        ["cog", lambda x: app.configuracoes(), "", "Configurações"],
+        ]
+
+<Tema@MDIconButton>
+    icon: 'theme-light-dark'
+    pos_hint: {'center_x': .92, 'center_y': .83}
+    on_release: app.switch_theme_style()
+    size_hint: (None, None)
+    size: dp(30), dp(30)
+
+<Label@MDLabel>
+    theme_text_color: "Custom"
+    color: '#016974'
+    halign: 'center'
+
+<MyAppWindow>:
+    id: my_app_window
+
+    ScreenManager:
+        id: screen_manager
+
+        Screen:
+            id: home
+            name: 'home'
+            
+            Header:
+                left_action_items: [["", lambda x: app.seta_voltar()]]
+                right_action_items:
+                    [
+                    ["login", lambda x: app.navigate_to_login(), "", "Login"],
+                    ["account-plus-outline", lambda x: app.navigate_to_cadastro(), "" , "Cadastrar-se"],
+                    ["cog", lambda x: app.configuracoes(), "", "Configurações"],
+                    ]
+            Tema:
+                id: theme_switch
+
+            MDFloatLayout:
+
+                Label:
+                    text: 'Bem Vindo'
+                    pos_hint: {'center_y': 0.7}
+                    font_size: '36sp'       
+
+                Label:
+                    text: 'ao'
+                    pos_hint: {'center_y': 0.6}
+                    font_size: '36sp'               
+
+                Label:
+                    text: 'Proto-On'
+                    pos_hint: {'center_y': 0.5}
+                    font_size: '50sp'
+                    bold: True
+                
+                MagicButton:
+                    text: 'Acessar'
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.2}
+                    on_release: 
+                        screen_manager.transition.direction = 'left'
+                        screen_manager.current = "tela_login"
+                        self.twist()
+
+        TelaLogin:
+            id: tela_login
+            name: 'tela_login'            
+
+            Header:
+                right_action_items:
+                    [
+                    ["home", lambda x: app.navigate_to_home(), "" , "Home"],
+                    ["account-plus-outline", lambda x: app.navigate_to_cadastro(), "" , "Cadastrar-se"],
+                    ["cog", lambda x: app.configuracoes(), "", "Configurações"],
+                    ]
+            Tema:
+                id: theme_switch 
+                
+            MDFloatLayout:
+        
+                MDIconButton:
+                    icon: 'account'
+                    pos_hint: {'center_x': 0.5, 'center_y': .7}
+                    user_font_size: '200sp'
+
+                Input:
+                    id: email_login
+                    hint_text: 'Email:'
+                    validator: 'email'
+                    pos_hint: {'center_x': 0.5, 'center_y': .6}
+                    helper_text: 'Insira seu endereço de email'
+                    # required: True
+                    # theme_text_color: "Custom"
+                    text_color: app.theme_cls.text_color
+                    line_color_normal: app.theme_cls.divider_color
+                    line_color_focus: app.theme_cls.primary_color
+
+                Input:
+                    id: senha_login
+                    hint_text: 'Senha:'
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    helper_text: 'Insira sua Senha'
+                    password: True
+                    # required: True
+                    theme_text_color: "Custom"
+                    text_color: app.theme_cls.text_color
+                    line_color_normal: app.theme_cls.divider_color
+                    line_color_focus: app.theme_cls.primary_color
+
+                MagicButton:
+                    text: 'Login'
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.4}
+                    on_release: 
+                        screen_manager.transition.direction = 'left'
+                        app.login()
+                        self.twist()
+
+                MagicButton:
+                    text: "Cadastrar"
+                    on_release: 
+                        screen_manager.transition.direction = 'left'
+                        screen_manager.current = "tela_cadastro"
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.3}
+
+                MDLabel:
+                    pos_hint: {'center_y': 0.2}
+                    text: 'Esqueceu a senha?'
+                    halign: 'center'
+
+                MDTextButton:
+                    text: 'Clique Aqui!'
+                    on_release: 
+                        screen_manager.transition.direction = 'left'
+                        screen_manager.current = "tela_recuperar_senha"
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.1}
+                    color: 0.1176, 0.5647, 1, 1                            
+        
+        TelaServicos:
+            name: "tela_servicos"
+
+            Header:
+            Tema:
+                id: theme_switch 
+
+            MDFloatLayout:            
+                MDLabel:
+                    theme_text_color: "Custom"
+                    text_color: '#016974'
+                    text: 'Servicos'
+                    font_size: 50
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.7}
+                    # color: 0.1176, 0.5647, 1, 1
+                    halign: 'center'
+
+                MDRaisedButton:
+                    text: 'Abrir uma Reclamação'
+                    on_release: 
+                        screen_manager.transition.direction = 'left'
+                        screen_manager.current = "tela_reclamacao"
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+                MDRaisedButton:
+                    text: 'Consultar'
+                    on_release: 
+                        screen_manager.transition.direction = 'left'
+                        screen_manager.current = "tela_consulta"
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.3}
+        
+        TelaCadastro:
+            name: "tela_cadastro"
+            
+            Header:
+                right_action_items:
+                    [
+                    ["home", lambda x: app.navigate_to_home(), "" , "Home"],
+                    ["login", lambda x: app.navigate_to_login(), "", "Login"],
+                    ["cog", lambda x: app.configuracoes(), "", "Configurações"],
+                    ]
+            Tema:
+
+            MDFloatLayout:
+            
+                MDLabel:
+                    text: 'Cadastro'
+                    font_size: 50
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.8}
+                    color: 0.1176, 0.5647, 1, 1
+                    halign: 'center'
+
+                Input:
+                    id: nome_input
+                    hint_text: 'Nome'
+                    helper_text: 'Insira seu nome'
+                    helper_text_mode: 'on_focus'
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.7}
+                    # required: True
+
+                Input:
+                    id: email_input
+                    hint_text: 'Email'
+                    validator: 'email'
+                    helper_text: 'Insira seu endereço de email'
+                    helper_text_mode: 'on_focus'
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.6}
+                    # required: True  # Alinha o texto horizontalmente ao centro
+
+                Input:
+                    id: senha_input
+                    hint_text: 'Senha:'
+                    helper_text: 'Digite uma senha forte'
+                    helper_text_mode: 'on_focus'
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    password: True  # Para ocultar a senha
+
+                Input:
+                    id: senha2_input
+                    hint_text: 'Confirma a Senha'
+                    helper_text: 'Digite igual em cima'
+                    helper_text_mode: 'on_focus'
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.4}
+                    password: True
+                    # required: True
+
+                MDRaisedButton:
+                    text: 'Cadastrar'
+                    on_release: app.cadastrar_municipe("Cadastro feito com Sucesso.\n\n")
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.2}
+
+        TelaReclamacao:
+            name: "tela_reclamacao"
+            
+            Header:
+            Tema:
+
+            MDFloatLayout:
+            
+                Label:
+                    text: 'Registre aqui a sua Reclamação'
+                    font_size: 40
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.75}
+                    size_hint_x: .5
+                    text_size: self.width, None
+
+                MDTextField:
+                    id: problema_input
+                    hint_text: 'Selecione'
+                    helper_text: 'Insira seu problema'
+                    helper_text_mode: 'on_focus'
+                    pos_hint: {'center_x': 0.65, 'center_y': 0.55}
+                    size_hint_x: .25
+                    on_focus: app.show_options_dialog()
+
+                Label:
+                    text: 'Problema: '
+                    pos_hint: {'center_x': .3, 'center_y': 0.55}
+                    font_size: '20sp'
+
+                Label:
+                    id: selected_item_label
+                    pos_hint: {'center_x': .65, 'center_y': 0.55}
+                    font_size: '15sp'
+                    color: 0, 0, 0, 1
+
+                Input:
+                    id: bairro_input
+                    hint_text: 'Bairro'
+                    helper_text: 'Insira o Bairro do local do Problema'
+                    helper_text_mode: 'on_focus'
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.45}
+                    # required: True 
+
+                Input:
+                    id: rua_input
+                    hint_text: 'Rua:'
+                    helper_text: 'Digite o nome da rua do local do Problema'
+                    helper_text_mode: 'on_focus'
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.35}
+
+                MDTextField:
+                    id: descricao_input
+                    hint_text: 'Descrição do Problema'
+                    helper_text: 'Descreva em poucas palavras a situação'
+                    helper_text_mode: 'on_focus'
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.25}
+                    size_hint_x: .5
+                    multiline: True
+                    max_height: dp(90)
+                    width: root.ids.problema_input.width
+
+                MDRaisedButton:
+                    text: 'Cadastrar'
+                    on_release: app.cadastrar_reclamacao("Sua Reclamação foi Registrada com Sucesso.\n\n")
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.1}
+
+        TelaConsulta:
+            name: "tela_consulta"
+            
+            Header:
+            Tema:
+            
+            MDFloatLayout:
+
+                Label:
+                    text: 'Consulta'
+                    font_size: 50
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.8}
+
+                Label:
+                    text: 'Protocolo: '
+                    pos_hint: {'center_x': 0.35, 'center_y': 0.7}
+                    font_size: '20sp'
+
+
+                Label:
+                    id: protocolo_label
+                    text: ''
+                    pos_hint: {'center_x': 0.65, 'center_y': 0.7}
+                    font_size: '20sp'
+                    color: (0, 0, 0, 1) if app.theme_cls.theme_style == "Light" else (1, 1, 1, 1)
+
+                Label:
+                    text: 'Requerente: '
+                    pos_hint: {'center_x': 0.35, 'center_y': 0.6}
+                    font_size: '20sp'
+
+
+                Label:
+                    id: requerente_label
+                    text: ''
+                    pos_hint: {'center_x': 0.65, 'center_y': 0.6}
+                    font_size: '20sp'
+                    color: (0, 0, 0, 1) if app.theme_cls.theme_style == "Light" else (1, 1, 1, 1)
+
+                Label:
+                    text: 'Problema: '
+                    pos_hint: {'center_x': 0.35, 'center_y': 0.5}
+                    font_size: '20sp'
+
+                Label:
+                    id: problema_label
+                    text: ''
+                    pos_hint: {'center_x': 0.65, 'center_y': 0.5}
+                    font_size: '20sp'
+
+                Label:
+                    text: 'Bairro: '
+                    pos_hint: {'center_x': 0.35, 'center_y': 0.4}
+                    font_size: '20sp'
+
+                Label:
+                    id: bairro_label
+                    text: ''
+                    pos_hint: {'center_x': 0.65, 'center_y': 0.4}
+                    font_size: '20sp'
+
+                Label:
+                    text: 'Status: '
+                    pos_hint: {'center_x': 0.35, 'center_y': 0.3}
+                    font_size: '20sp'
+
+                Label:
+                    id: status_label
+                    text: ''
+                    pos_hint: {'center_x': 0.65, 'center_y': 0.3}
+                    font_size: '20sp'
+
+                MagicButton:
+                    text: 'Consultar'
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.2}
+                    on_release: 
+                        app.exibir_consulta()
+                        self.twist()
+        
+        TelaRecuperarSenha:
+            name: "tela_recuperar_senha"
+            
+            Header:
+            Tema:
+            
+            MDFloatLayout:
+
+                MDLabel:
+                    text: 'Recuperação de Senha'
+                    font_size: 50
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.7}
+                    color: 0.1176, 0.5647, 1, 1
+                    halign: 'center'
+
+                Input:
+                    hint_text: 'Email'
+                    validator: 'email'
+                    helper_text: 'Enviaremos sua senha através deste email'
+                    helper_text_mode: 'on_focus'
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    # required: True  # Alinha o texto horizontalmente ao centro
+
+                MDRaisedButton:
+                    text: 'Enviar'
+                    on_release: app.show_confirmation_dialog("Senha enviada para o seu email.\n\n")
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.25}
+
