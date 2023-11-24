@@ -70,7 +70,7 @@ class ItemConfig(OneLineAvatarIconListItem, ButtonBehavior):
         app.add_selected_option(self.text)
         self.close_conf()
         
-class MyApp(MDApp):    
+class main(MDApp):    
     
     def build(self):        
         self.theme_cls.primary_palette = "Teal"
@@ -284,4 +284,4 @@ class MyApp(MDApp):
         self.conf.dismiss()
 
 if __name__ == '__main__':
-    MyApp().run()
+    main().run()
